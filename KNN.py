@@ -56,7 +56,7 @@ class KNN:
         self.neighbors = neighborsMatrix
 
 
-    def get_class(self):
+    def get_class(self,voting_info=False):
         """
         Get the class by maximum voting
         :return: 2 numpy array of Nx1 elements.
@@ -68,6 +68,9 @@ class KNN:
         r2 = []
         for i in range(self.neighbors.shape[0]):
             listaUnics,listaIndex,listaCompte = np.unique(self.neighbors[i],return_inverse=True,return_counts=True)
+            #for debug purposes only
+            if(voting_info):
+                print(listaUnics,listaIndex,listaCompte)
             compteBo = listaCompte[listaIndex]
             maxim=np.max(compteBo)
             index = compteBo.argmax(0)
@@ -75,13 +78,14 @@ class KNN:
             r2.append(compteBo[index]/self.neighbors.shape[1]*100) #GumerNota: Percentatge?
         return r1
 
-    def predict(self, test_data, k):
+    def predict(self, test_data, K, voting_info):
         """
         predicts the class at which each element in test_data belongs to
-        :param test_data: array that has to be shaped to a NxD matrix ( N points in a D dimensional space)
-        :param k:         :param k:  the number of neighbors to look at
+        :param test_data:   array that has to be shaped to a NxD matrix ( N points in a D dimensional space)
+        :param k:           the number of neighbors to look at
+        :param voting_info: option to return info about the voting percentages
         :return: the output form get_class (2 Nx1 vector, 1st the classm 2nd the  % of votes it got
         """
-        self.get_k_neighbours(test_data, k)
-        r1 = self.get_class()
+        self.get_k_neighbours(test_data, K)
+        r1 = self.get_class(voting_info)
         return r1

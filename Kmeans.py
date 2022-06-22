@@ -158,9 +158,9 @@ class KMeans:
                 MC[0] /= count
                 MC[1] /= count
                 MC[2] /= count
-                self.centroids[index]=MC
+                self.centroids[index]=np.round(MC,3)
             else:
-                self.centroids[index]=self.old_centroids[index]
+                self.centroids[index]=np.round(self.old_centroids[index],3)
         return self.centroids
 
     def converges(self):
