@@ -248,7 +248,7 @@ def visualize_k_means(kmeans, img_shape):
 
     fig = plt.figure(figsize=(8, 8))
 
-    X_compressed = kmeans.centroids[kmeans.labels]
+    X_compressed = kmeans.centroids[kmeans.labels.astype('int32')]
     X_compressed = prepare_img(X_compressed, img_shape)
 
     org_img = prepare_img(kmeans.X, img_shape)
